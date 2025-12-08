@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://chat.vercel.ai"),
   title: "Next.js Chatbot Template",
   description: "Next.js chatbot template using the AI SDK.",
+  openGraph: {
+    images: ["/images/og-image.png"],
+  },
 };
 
 export const viewport = {
@@ -74,7 +77,7 @@ export default function RootLayout({
       <body className="antialiased">
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
+          defaultTheme="dark"
           disableTransitionOnChange
           enableSystem
         >

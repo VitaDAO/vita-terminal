@@ -1,9 +1,11 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import type { User } from "next-auth";
-import { useState } from "react";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { unstable_serialize } from "swr/infinite";
@@ -38,7 +40,13 @@ export function AppSidebar({ user }: { user: User | undefined }) {
   const router = useRouter();
   const { setOpenMobile } = useSidebar();
   const { mutate } = useSWRConfig();
+  const { resolvedTheme } = useTheme();
   const [showDeleteAllDialog, setShowDeleteAllDialog] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleDeleteAll = () => {
     const deletePromise = fetch("/api/history", {
@@ -71,7 +79,17 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                 }}
               >
                 <span className="cursor-pointer rounded-md px-2 font-semibold text-lg hover:bg-muted">
-                  Chatbot
+                  <Image
+                    alt="Logo"
+                    className="h-6 w-auto"
+                    height={24}
+                    src={
+                      mounted && resolvedTheme === "dark"
+                        ? "/images/logo-dark.svg"
+                        : "/images/logo-light.svg"
+                    }
+                    width={150}
+                  />
                 </span>
               </Link>
               <div className="flex flex-row gap-1">

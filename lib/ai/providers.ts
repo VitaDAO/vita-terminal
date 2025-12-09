@@ -5,6 +5,7 @@ import {
   wrapLanguageModel,
 } from "ai";
 import { isTestEnvironment } from "../constants";
+import { n8n } from "./n8n/provider";
 
 export const myProvider = isTestEnvironment
   ? (() => {
@@ -30,6 +31,7 @@ export const myProvider = isTestEnvironment
           model: gateway.languageModel("xai/grok-3-mini"),
           middleware: extractReasoningMiddleware({ tagName: "think" }),
         }),
+        n8n: n8n("default"),
         "title-model": gateway.languageModel("xai/grok-2-1212"),
         "artifact-model": gateway.languageModel("xai/grok-2-1212"),
       },

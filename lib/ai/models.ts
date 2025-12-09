@@ -18,4 +18,9 @@ export const chatModels: ChatModel[] = [
     description:
       "Uses advanced chain-of-thought reasoning for complex problems",
   },
+  {
+    id: "n8n",
+    name: "N8n Agent",
+    description: "Custom AI Agent powered by N8n workflows",
+  },
 ];

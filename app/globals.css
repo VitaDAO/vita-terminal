@@ -316,3 +316,47 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* =====================================
+   VITADAO FONT SYSTEM - SIMPLE & CLEAN
+   ===================================== */
+
+/* Sora Font Family - 3 weights */
+@font-face {
+  font-family: "Sora";
+  src: url("/fonts/sora/Sora-Thin.ttf");
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sora";
+  src: url("/fonts/sora/Sora-ExtraLight.ttf");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Sora";
+  src: url("/fonts/sora/Sora-Light.ttf");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Trispace Font Family - 1 weight */
+@font-face {
+  font-family: "Trispace";
+  src: url("/fonts/trispace/Trispace-Regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Base body font */
+body {
+  font-family: "Sora", sans-serif;
+  font-weight: 300;
+}

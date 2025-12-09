@@ -1,5 +1,5 @@
 import type { ProviderV2 } from "@ai-sdk/provider";
-import { generateId } from "@ai-sdk/provider-utils";
+import { generateId } from "ai";
 import { N8nChatLanguageModel } from "./n8n-chat-language-model";
 
 interface N8nProvider extends ProviderV2 {

@@ -1,6 +1,7 @@
 "use client";
 import type { UseChatHelpers } from "@ai-sdk/react";
 import equal from "fast-deep-equal";
+import Image from "next/image";
 import { memo, useState } from "react";
 import type { Vote } from "@/lib/db/schema";
 import type { ChatMessage } from "@/lib/types";
@@ -65,7 +66,12 @@ const PurePreviewMessage = ({
       >
         {message.role === "assistant" && (
           <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-background ring-1 ring-border">
-            <SparklesIcon size={14} />
+            <Image
+              alt="Vita"
+              height={16}
+              src="/images/logo-small.svg"
+              width={16}
+            />
           </div>
         )}
 
@@ -130,7 +136,7 @@ const PurePreviewMessage = ({
                       data-testid="message-content"
                       style={
                         message.role === "user"
-                          ? { backgroundColor: "#006cff" }
+                          ? { backgroundColor: "#1A1A1A" }
                           : undefined
                       }
                     >

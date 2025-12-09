@@ -7,12 +7,13 @@ import { SidebarToggle } from "@/components/sidebar-toggle";
 import { Button } from "@/components/ui/button";
 import { PlusIcon } from "./icons";
 import { useSidebar } from "./ui/sidebar";
-import { VisibilitySelector, type VisibilityType } from "./visibility-selector";
+// import { VisibilitySelector, type VisibilityType } from "./visibility-selector";
+import type { VisibilityType } from "./visibility-selector";
 
 function PureChatHeader({
-  chatId,
-  selectedVisibilityType,
-  isReadonly,
+  chatId: _chatId,
+  selectedVisibilityType: _selectedVisibilityType,
+  isReadonly: _isReadonly,
 }: {
   chatId: string;
   selectedVisibilityType: VisibilityType;
@@ -41,13 +42,13 @@ function PureChatHeader({
         </Button>
       )}
 
-      {!isReadonly && (
+      {/*{!isReadonly && (
         <VisibilitySelector
           chatId={chatId}
           className="order-1 md:order-2"
           selectedVisibilityType={selectedVisibilityType}
         />
-      )}
+      )}*/}
     </header>
   );
 }

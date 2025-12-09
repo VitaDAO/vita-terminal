@@ -60,6 +60,7 @@ export class N8nChatLanguageModel implements LanguageModelV2 {
       sessionId,
       chatInput,
       messages,
+      model: this.modelId,
     };
 
     return { args: body, warnings };

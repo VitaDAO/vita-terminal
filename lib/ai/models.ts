@@ -1,4 +1,4 @@
-export const DEFAULT_CHAT_MODEL: string = "chat-model";
+export const DEFAULT_CHAT_MODEL: string = "prime-intellect/intellect-3";
 
 export type ChatModel = {
   id: string;
@@ -8,19 +8,18 @@ export type ChatModel = {
 
 export const chatModels: ChatModel[] = [
   {
-    id: "chat-model",
-    name: "Grok Vision",
-    description: "Advanced multimodal model with vision and text capabilities",
+    id: "prime-intellect/intellect-3",
+    name: "Intellect-3",
+    description: "Highly capable reasoning model by Prime Intellect",
   },
   {
-    id: "chat-model-reasoning",
-    name: "Grok Reasoning",
-    description:
-      "Uses advanced chain-of-thought reasoning for complex problems",
+    id: "anthropic/claude-opus-4.5",
+    name: "Claude Opus 4.5",
+    description: "Anthropic's most powerful model for complex tasks",
   },
   {
-    id: "n8n",
-    name: "N8n Agent",
-    description: "Custom AI Agent powered by N8n workflows",
+    id: "openai/gpt-5",
+    name: "GPT-5",
+    description: "OpenAI's latest flagship model",
   },
 ];

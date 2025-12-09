@@ -90,8 +90,13 @@ export async function POST(request: Request) {
 
   try {
     const json = await request.json();
+    console.log(
+      "Validation debug - Incoming JSON:",
+      JSON.stringify(json, null, 2)
+    );
     requestBody = postRequestBodySchema.parse(json);
-  } catch (_) {
+  } catch (error) {
+    console.error("Zod validation error:", error);
     return new ChatSDKError("bad_request:api").toResponse();
   }
 
@@ -184,15 +189,12 @@ export async function POST(request: Request) {
           system: systemPrompt({ selectedChatModel, requestHints }),
           messages: convertToModelMessages(uiMessages),
           stopWhen: stepCountIs(5),
-          experimental_activeTools:
-            selectedChatModel === "chat-model-reasoning"
-              ? []
-              : [
-                  "getWeather",
-                  "createDocument",
-                  "updateDocument",
-                  "requestSuggestions",
-                ],
+          experimental_activeTools: [
+            "getWeather",
+            "createDocument",
+            "updateDocument",
+            "requestSuggestions",
+          ],
           experimental_transform: smoothStream({ chunking: "word" }),
           tools: {
             getWeather,

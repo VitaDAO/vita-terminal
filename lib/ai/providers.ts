@@ -1,9 +1,5 @@
 import { gateway } from "@ai-sdk/gateway";
-import {
-  customProvider,
-  extractReasoningMiddleware,
-  wrapLanguageModel,
-} from "ai";
+import { customProvider } from "ai";
 import { isTestEnvironment } from "../constants";
 import { n8n } from "./n8n/provider";
 
@@ -26,12 +22,9 @@ export const myProvider = isTestEnvironment
     })()
   : customProvider({
       languageModels: {
-        "chat-model": gateway.languageModel("xai/grok-2-vision-1212"),
-        "chat-model-reasoning": wrapLanguageModel({
-          model: gateway.languageModel("xai/grok-3-mini"),
-          middleware: extractReasoningMiddleware({ tagName: "think" }),
-        }),
-        n8n: n8n("default"),
+        "prime-intellect/intellect-3": n8n("prime-intellect/intellect-3"),
+        "anthropic/claude-opus-4.5": n8n("anthropic/claude-opus-4.5"),
+        "openai/gpt-5": n8n("openai/gpt-5"),
         "title-model": gateway.languageModel("xai/grok-2-1212"),
         "artifact-model": gateway.languageModel("xai/grok-2-1212"),
       },

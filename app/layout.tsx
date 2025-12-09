@@ -7,11 +7,32 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://chat.vercel.ai"),
+  metadataBase: new URL("https://terminal.vitadao.com"),
   title: "Vita Terminal - VitaDAO Knowledge Assistant",
   description:
     "Vita Terminal helps users find information about VitaDAO, VitaLabs, the Fellowship Program, projects, funding, and team formation.",
   openGraph: {
+    title: "Vita Terminal - VitaDAO Knowledge Assistant",
+    description:
+      "Vita Terminal helps users find information about VitaDAO, VitaLabs, the Fellowship Program, projects, funding, and team formation.",
+    url: "https://terminal.vitadao.com",
+    siteName: "Vita Terminal",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Vita Terminal",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Vita Terminal - VitaDAO Knowledge Assistant",
+    description:
+      "Vita Terminal helps users find information about VitaDAO, VitaLabs, the Fellowship Program, projects, funding, and team formation.",
     images: ["/og-image.png"],
   },
 };

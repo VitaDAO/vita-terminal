@@ -1,0 +1,35 @@
+import { GaugeIcon } from "lucide-react"; // Using Lucide icon as a placeholder for the custom gauge if not available
+import Link from "next/link";
+import { cn } from "@/lib/utils";
+
+export function AccessTierBadge({ className }: { className?: string }) {
+  return (
+    <div
+      className={cn("flex w-full items-center justify-between py-2", className)}
+    >
+      <div className="flex shrink-0 items-center">
+        <p className="font-['Trispace',sans-serif] text-[#777] text-[10px] uppercase tracking-wide">
+          VITA-TERMINAL v1.2.5
+        </p>
+      </div>
+      <div className="flex shrink-0 items-center gap-2">
+        <div className="flex items-center justify-center gap-1 rounded-md border border-[#404040] px-2 py-1 text-[10px] uppercase">
+          <span className="text-[#aeaeae]">YOUR ACCESS TIER:</span>
+          <span className="text-white">BASIC</span>
+        </div>
+        <button
+          className="flex cursor-pointer items-center justify-center gap-1 rounded-md border border-[#796812] bg-transparent px-2 py-1 transition-colors hover:bg-[#796812]/20"
+          type="button"
+        >
+          <Link
+            className="font-bold text-[#ffdd35] text-[10px] uppercase"
+            href="/terminal/upgrade"
+          >
+            UPGRADE
+          </Link>
+          <GaugeIcon className="text-[#ffdd35]" size={12} />
+        </button>
+      </div>
+    </div>
+  );
+}

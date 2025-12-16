@@ -24,6 +24,7 @@ import { chatModels } from "@/lib/ai/models";
 import type { Attachment, ChatMessage } from "@/lib/types";
 import type { AppUsage } from "@/lib/usage";
 import { cn } from "@/lib/utils";
+import { AccessTierBadge } from "./AccessTierBadge";
 // import { Context } from "./elements/context";
 import {
   PromptInput,
@@ -394,6 +395,7 @@ function PureMultimodalInput({
           )}
         </PromptInputToolbar>
       </PromptInput>
+      <AccessTierBadge />
     </div>
   );
 }

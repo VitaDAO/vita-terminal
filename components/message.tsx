@@ -21,7 +21,7 @@ import {
 import { SparklesIcon } from "./icons";
 import { MessageActions } from "./message-actions";
 import { MessageEditor } from "./message-editor";
-import { MessageReasoning } from "./message-reasoning";
+// import { MessageReasoning } from "./message-reasoning";
 import { PreviewAttachment } from "./preview-attachment";
 import { Weather } from "./weather";
 
@@ -113,13 +113,14 @@ const PurePreviewMessage = ({
             const key = `message-${message.id}-part-${index}`;
 
             if (type === "reasoning" && part.text?.trim().length > 0) {
-              return (
+              return null;
+              /* return (
                 <MessageReasoning
                   isLoading={isLoading}
                   key={key}
                   reasoning={part.text}
                 />
-              );
+              ); */
             }
 
             if (type === "text") {

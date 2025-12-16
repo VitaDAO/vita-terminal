@@ -139,6 +139,7 @@ export class N8nChatLanguageModel implements LanguageModelV2 {
         const reader = response.body!.getReader();
         const decoder = new TextDecoder();
         let buffer = "";
+        let isThinking = false;
 
         try {
           while (true) {
@@ -155,21 +156,89 @@ export class N8nChatLanguageModel implements LanguageModelV2 {
               }
               try {
                 const json = JSON.parse(line);
+                console.log("N8n Chunk:", json); // Debug incoming stream
                 let content = "";
+                let reasoning = "";
+
+                if (json.reasoning || json.thinking) {
+                  reasoning = json.reasoning || json.thinking;
+                }
+
                 if (json.type === "item" && json.content) {
                   content = json.content;
                 } else if (json.output) {
                   content = json.output;
                 }
 
-                if (content) {
-                  // Fix: Use exact format required by AI SDK V2 runtime
+                if (reasoning) {
                   controller.enqueue({
-                    type: "text-delta",
-                    textDelta: content,
-                    delta: content,
-                    id: "0",
+                    type: "reasoning-delta",
+                    textDelta: reasoning,
                   } as any);
+                }
+
+                if (content) {
+                  let remainingContent = content;
+
+                  // Handle thinking tag start
+                  if (!isThinking) {
+                    const startTagIndex = remainingContent.indexOf("<think>");
+                    if (startTagIndex !== -1) {
+                      const textBefore = remainingContent.substring(
+                        0,
+                        startTagIndex
+                      );
+                      if (textBefore) {
+                        controller.enqueue({
+                          type: "text-delta",
+                          textDelta: textBefore,
+                          delta: textBefore,
+                        } as any);
+                      }
+                      isThinking = true;
+                      remainingContent = remainingContent.substring(
+                        startTagIndex + 7
+                      ); // 7 is length of <think>
+                    }
+                  }
+
+                  // Handle thinking tag end
+                  if (isThinking) {
+                    const endTagIndex = remainingContent.indexOf("</think>");
+                    if (endTagIndex !== -1) {
+                      const reasoningContent = remainingContent.substring(
+                        0,
+                        endTagIndex
+                      );
+                      if (reasoningContent) {
+                        controller.enqueue({
+                          type: "reasoning-delta",
+                          textDelta: reasoningContent,
+                        } as any);
+                      }
+                      isThinking = false;
+                      remainingContent = remainingContent.substring(
+                        endTagIndex + 8
+                      ); // 8 is length of </think>
+                    } else {
+                      // Whole chunk is reasoning
+                      controller.enqueue({
+                        type: "reasoning-delta",
+                        textDelta: remainingContent,
+                      } as any);
+                      remainingContent = "";
+                    }
+                  }
+
+                  // Handle remaining normal text
+                  if (remainingContent && !isThinking) {
+                    controller.enqueue({
+                      type: "text-delta",
+                      textDelta: remainingContent,
+                      delta: remainingContent,
+                      id: "0",
+                    } as any);
+                  }
                 }
               } catch (_e) {
                 // ignore
@@ -181,20 +250,40 @@ export class N8nChatLanguageModel implements LanguageModelV2 {
             try {
               const json = JSON.parse(buffer);
               let content = "";
+              let reasoning = "";
+
+              if (json.reasoning || json.thinking) {
+                reasoning = json.reasoning || json.thinking;
+              }
+
               if (json.type === "item" && json.content) {
                 content = json.content;
               } else if (json.output) {
                 content = json.output;
               }
 
-              if (content) {
-                // Fix: Use exact format required by AI SDK V2 runtime
+              if (reasoning) {
                 controller.enqueue({
-                  type: "text-delta",
-                  textDelta: content,
-                  delta: content,
-                  id: "0",
+                  type: "reasoning-delta",
+                  textDelta: reasoning,
                 } as any);
+              }
+
+              if (content) {
+                // Simple processing for buffer end, assuming no split tags for now to keep it safe
+                if (isThinking) {
+                  controller.enqueue({
+                    type: "reasoning-delta",
+                    textDelta: content,
+                  } as any);
+                } else {
+                  controller.enqueue({
+                    type: "text-delta",
+                    textDelta: content,
+                    delta: content,
+                    id: "0",
+                  } as any);
+                }
               }
             } catch (_e) {
               /* ignore */

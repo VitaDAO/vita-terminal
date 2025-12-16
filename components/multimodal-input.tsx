@@ -24,7 +24,7 @@ import { chatModels } from "@/lib/ai/models";
 import type { Attachment, ChatMessage } from "@/lib/types";
 import type { AppUsage } from "@/lib/usage";
 import { cn } from "@/lib/utils";
-import { Context } from "./elements/context";
+// import { Context } from "./elements/context";
 import {
   PromptInput,
   PromptInputModelSelect,
@@ -194,14 +194,14 @@ function PureMultimodalInput({
     }
   }, []);
 
-  const contextProps = useMemo(
+  const _contextProps = useMemo(
     () => ({
       usage,
     }),
     [usage]
   );
 
-  const handleFileChange = useCallback(
+  const _handleFileChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
       const files = Array.from(event.target.files || []);
 
@@ -298,14 +298,14 @@ function PureMultimodalInput({
           />
         )}
 
-      <input
+      {/* <input
         className="-top-4 -left-4 pointer-events-none fixed size-0.5 opacity-0"
         multiple
         onChange={handleFileChange}
         ref={fileInputRef}
         tabIndex={-1}
         type="file"
-      />
+      /> */}
 
       <PromptInput
         className="rounded-xl border border-border bg-background p-3 shadow-xs transition-all duration-200 focus-within:border-border hover:border-muted-foreground/50"
@@ -365,15 +365,15 @@ function PureMultimodalInput({
             rows={1}
             value={input}
           />{" "}
-          <Context {...contextProps} />
+          {/* <Context {...contextProps} /> */}
         </div>
         <PromptInputToolbar className="!border-top-0 border-t-0! p-0 shadow-none dark:border-0 dark:border-transparent!">
           <PromptInputTools className="gap-0 sm:gap-0.5">
-            <AttachmentsButton
+            {/* <AttachmentsButton
               fileInputRef={fileInputRef}
               selectedModelId={selectedModelId}
               status={status}
-            />
+            /> */}
             <ModelSelectorCompact
               onModelChange={onModelChange}
               selectedModelId={selectedModelId}
@@ -448,7 +448,7 @@ function PureAttachmentsButton({
   );
 }
 
-const AttachmentsButton = memo(PureAttachmentsButton);
+const _AttachmentsButton = memo(PureAttachmentsButton);
 
 function PureModelSelectorCompact({
   selectedModelId,

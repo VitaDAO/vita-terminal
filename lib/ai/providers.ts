@@ -1,7 +1,11 @@
-import { gateway } from "@ai-sdk/gateway";
+// import { createXai } from "@ai-sdk/xai";
 import { customProvider } from "ai";
 import { isTestEnvironment } from "../constants";
 import { n8n } from "./n8n/provider";
+
+/* const xai = createXai({
+  apiKey: process.env.XAI_API_KEY,
+}); */
 
 export const myProvider = isTestEnvironment
   ? (() => {
@@ -25,7 +29,7 @@ export const myProvider = isTestEnvironment
         "prime-intellect/intellect-3": n8n("prime-intellect/intellect-3"),
         "anthropic/claude-opus-4.5": n8n("anthropic/claude-opus-4.5"),
         "openai/gpt-5": n8n("openai/gpt-5"),
-        "title-model": gateway.languageModel("xai/grok-2-1212"),
-        "artifact-model": gateway.languageModel("xai/grok-2-1212"),
+        "title-model": n8n("prime-intellect/intellect-3"),
+        "artifact-model": n8n("prime-intellect/intellect-3"),
       },
     });

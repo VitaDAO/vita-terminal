@@ -17,18 +17,16 @@ export function AccessTierBadge({ className }: { className?: string }) {
           <span className="text-[#aeaeae]">YOUR ACCESS TIER:</span>
           <span className="text-white">BASIC</span>
         </div>
-        <button
+        <Link
           className="flex cursor-pointer items-center justify-center gap-1 rounded-md border border-[#796812] bg-transparent px-2 py-1 transition-colors hover:bg-[#796812]/20"
-          type="button"
+          href="https://www.vitadao.com/terminal/upgrade"
+          target="_top"
         >
-          <Link
-            className="font-bold text-[#ffdd35] text-[10px] uppercase"
-            href="https://www.vitadao.com/terminal/upgrade"
-          >
+          <span className="font-bold text-[#ffdd35] text-[10px] uppercase">
             UPGRADE
-          </Link>
+          </span>
           <GaugeIcon className="text-[#ffdd35]" size={12} />
-        </button>
+        </Link>
       </div>
     </div>
   );

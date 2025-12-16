@@ -23,7 +23,7 @@ export function AccessTierBadge({ className }: { className?: string }) {
         >
           <Link
             className="font-bold text-[#ffdd35] text-[10px] uppercase"
-            href="/terminal/upgrade"
+            href="https://www.vitadao.com/terminal/upgrade"
           >
             UPGRADE
           </Link>

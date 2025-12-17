@@ -31,6 +31,9 @@ declare module "next-auth/jwt" {
   }
 }
 
+const isProduction = process.env.NODE_ENV === "production";
+const isHttps = process.env.NEXTAUTH_URL?.startsWith("https://") || isProduction;
+
 export const {
   handlers: { GET, POST },
   auth,
@@ -40,12 +43,12 @@ export const {
   ...authConfig,
   cookies: {
     sessionToken: {
-      name: "__Secure-authjs.session-token",
+      name: isHttps ? "__Secure-authjs.session-token" : "authjs.session-token",
       options: {
         httpOnly: true,
-        sameSite: "none",
+        sameSite: isHttps ? "none" : "lax",
         path: "/",
-        secure: true,
+        secure: isHttps,
       },
     },
   },

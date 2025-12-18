@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/theme-provider";
+import { PrivyAuthProvider } from "@/contexts/PrivyAuthContext";
 
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
@@ -103,8 +104,10 @@ export default function RootLayout({
           disableTransitionOnChange
           enableSystem
         >
-          <Toaster position="top-center" />
-          <SessionProvider>{children}</SessionProvider>
+          <PrivyAuthProvider>
+            <Toaster position="top-center" />
+            <SessionProvider>{children}</SessionProvider>
+          </PrivyAuthProvider>
         </ThemeProvider>
       </body>
     </html>

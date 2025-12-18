@@ -1,8 +1,27 @@
+"use client";
+
 import { GaugeIcon } from "lucide-react"; // Using Lucide icon as a placeholder for the custom gauge if not available
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { usePrivyAuth } from "@/contexts/PrivyAuthContext";
 
 export function AccessTierBadge({ className }: { className?: string }) {
+  const { accessTier, isAuthenticated } = usePrivyAuth();
+
+  const getAccessTierDisplay = () => {
+    if (!isAuthenticated) {
+      return "WALLET NOT CONNECTED";
+    }
+    return accessTier || "BASIC";
+  };
+
+  const getTierTextColor = () => {
+    if (!isAuthenticated) {
+      return "text-[#ff6b6b]"; // Red for not connected
+    }
+    return "text-white"; // White for connected
+  };
+
   return (
     <div
       className={cn("flex w-full items-center justify-between py-2", className)}
@@ -15,7 +34,7 @@ export function AccessTierBadge({ className }: { className?: string }) {
       <div className="flex shrink-0 items-center gap-2">
         <div className="flex items-center justify-center gap-1 rounded-md border border-[#404040] px-2 py-1 text-[10px] uppercase">
           <span className="text-[#aeaeae]">YOUR ACCESS TIER:</span>
-          <span className="text-white">BASIC</span>
+          <span className={getTierTextColor()}>{getAccessTierDisplay()}</span>
         </div>
         <Link
           className="flex cursor-pointer items-center justify-center gap-1 rounded-md border border-[#796812] bg-transparent px-2 py-1 transition-colors hover:bg-[#796812]/20"

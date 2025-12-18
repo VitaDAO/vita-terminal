@@ -1,7 +1,7 @@
 "use client";
 
 import { useControllableState } from "@radix-ui/react-use-controllable-state";
-import { BrainIcon, ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 import { createContext, memo, useContext, useEffect, useState } from "react";
 import {
@@ -126,7 +126,9 @@ export const ReasoningTrigger = memo(
       >
         {children ?? (
           <>
-            <BrainIcon className="size-4" />
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="size-4">
+              <path d="M4.54411 2.87939L4.65657 2.95888C6.69253 4.44466 9.41504 4.44466 11.4451 2.94665C13.1259 1.71155 15.2566 3.69871 14.2327 5.55136L10.7408 11.8675C9.53932 14.0442 6.50313 14.0442 5.29576 11.8675L1.76834 5.4841C0.744438 3.64368 2.86326 1.65041 4.54411 2.87939Z" fill="#FFDD35"/>
+            </svg>
             {isStreaming || duration === 0 ? (
               <p>Thinking...</p>
             ) : (

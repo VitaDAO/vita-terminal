@@ -1,7 +1,6 @@
 "use client";
 import type { UseChatHelpers } from "@ai-sdk/react";
 import equal from "fast-deep-equal";
-import Image from "next/image";
 import { memo, useState } from "react";
 import type { Vote } from "@/lib/db/schema";
 import type { ChatMessage } from "@/lib/types";
@@ -66,12 +65,9 @@ const PurePreviewMessage = ({
       >
         {message.role === "assistant" && (
           <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-background ring-1 ring-border">
-            <Image
-              alt="Vita"
-              height={16}
-              src="/images/logo-small.svg"
-              width={16}
-            />
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4.54411 2.87939L4.65657 2.95888C6.69253 4.44466 9.41504 4.44466 11.4451 2.94665C13.1259 1.71155 15.2566 3.69871 14.2327 5.55136L10.7408 11.8675C9.53932 14.0442 6.50313 14.0442 5.29576 11.8675L1.76834 5.4841C0.744438 3.64368 2.86326 1.65041 4.54411 2.87939Z" fill="#FFDD35"/>
+            </svg>
           </div>
         )}
 
@@ -322,7 +318,9 @@ export const ThinkingMessage = () => {
       <div className="flex items-start justify-start gap-3">
         <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-background ring-1 ring-border">
           <div className="animate-pulse">
-            <SparklesIcon size={14} />
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4.54411 2.87939L4.65657 2.95888C6.69253 4.44466 9.41504 4.44466 11.4451 2.94665C13.1259 1.71155 15.2566 3.69871 14.2327 5.55136L10.7408 11.8675C9.53932 14.0442 6.50313 14.0442 5.29576 11.8675L1.76834 5.4841C0.744438 3.64368 2.86326 1.65041 4.54411 2.87939Z" fill="#FFDD35"/>
+            </svg>
           </div>
         </div>
 

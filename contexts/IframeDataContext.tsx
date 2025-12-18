@@ -33,11 +33,11 @@ export function IframeDataProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
-      // Verify origin for security
+      // Verify origin for security - allow localhost for development
       const allowedOrigins = process.env.NEXT_PUBLIC_ALLOWED_IFRAME_ORIGINS?.split(',') || ['vitadao.com'];
       const isAllowedOrigin = allowedOrigins.some(origin => 
         event.origin.includes(origin.replace('https://', '').replace('http://', ''))
-      );
+      ) || event.origin.includes('localhost'); // Allow localhost for development
       
       if (!isAllowedOrigin) {
         console.warn('Message from unauthorized origin:', event.origin);

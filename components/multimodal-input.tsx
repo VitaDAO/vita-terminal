@@ -28,11 +28,7 @@ import {
   PromptInputToolbar,
   PromptInputTools,
 } from "./elements/prompt-input";
-import {
-  ArrowUpIcon,
-  PaperclipIcon,
-  StopIcon,
-} from "./icons";
+import { ArrowUpIcon, PaperclipIcon, StopIcon } from "./icons";
 import { PreviewAttachment } from "./preview-attachment";
 import { SuggestedActions } from "./suggested-actions";
 import { Button } from "./ui/button";
@@ -346,11 +342,9 @@ function PureMultimodalInput({
         <div className="flex flex-row items-start gap-1 sm:gap-2">
           <PromptInputTextarea
             autoFocus
-            className="grow resize-none border-0! border-none! bg-transparent p-2 text-sm outline-none ring-0 [-ms-overflow-style:none] [scrollbar-width:none] placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 [&::-webkit-scrollbar]:hidden"
+            className="h-10 max-h-10 min-h-10 grow resize-none border-0! border-none! bg-transparent p-2 text-sm outline-none ring-0 [-ms-overflow-style:none] [scrollbar-width:none] placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 [&::-webkit-scrollbar]:hidden"
             data-testid="multimodal-input"
             disableAutoResize={true}
-            maxHeight={200}
-            minHeight={44}
             onChange={handleInput}
             placeholder="Send a message..."
             ref={textareaRef}
@@ -438,7 +432,6 @@ function PureAttachmentsButton({
 }
 
 const _AttachmentsButton = memo(PureAttachmentsButton);
-
 
 function PureStopButton({
   stop,

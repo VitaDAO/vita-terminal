@@ -1,31 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { usePrivyAuth } from "@/contexts/PrivyAuthContext";
-import { useSession } from "next-auth/react";
+import { useIframeData } from "@/contexts/IframeDataContext";
 
 export const Greeting = () => {
-  const { user: privyUser } = usePrivyAuth();
-  const { data: session } = useSession();
+  const { privyAuth, isAuthenticated } = useIframeData();
 
   const getUserGreeting = () => {
-    // Try Privy wallet address first
-    if (privyUser?.wallet?.address) {
-      const address = privyUser.wallet.address;
+    // ONLY show personalized greeting when wallet address is available
+    if (isAuthenticated && privyAuth?.user?.wallet?.address) {
+      const address = privyAuth.user.wallet.address;
       return `Welcome to the VitaDAO Knowledge Assistant, ${address.slice(0, 6)}...${address.slice(-4)}`;
     }
-    
-    // Try Privy email
-    if (privyUser?.email) {
-      return `Welcome to the VitaDAO Knowledge Assistant, ${privyUser.email}`;
-    }
-    
-    // Try NextAuth email
-    if (session?.user?.email) {
-      return `Welcome to the VitaDAO Knowledge Assistant, ${session.user.email}`;
-    }
-    
-    // Fallback
+
+    // Default greeting - no email, no guest, nothing else
     return "Welcome to the VitaDAO Knowledge Assistant";
   };
 

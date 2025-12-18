@@ -22,9 +22,7 @@ export const postRequestBodySchema = z.object({
     parts: z.array(partSchema),
   }),
   selectedChatModel: z.enum([
-    "prime-intellect/intellect-3",
-    "anthropic/claude-opus-4.5",
-    "openai/gpt-5",
+    "vita-assistant",
   ]),
   selectedVisibilityType: z.enum(["public", "private"]),
 });

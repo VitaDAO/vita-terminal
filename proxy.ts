@@ -14,7 +14,7 @@ export async function proxy(request: NextRequest) {
     return new Response("pong", { status: 200 });
   }
 
-  if (pathname.startsWith("/api/auth") || pathname.startsWith("/api/iframe-token")) {
+  if (pathname.startsWith("/api/auth") || pathname.startsWith("/api/iframe-token") || pathname.startsWith("/api/chat")) {
     return NextResponse.next();
   }
 

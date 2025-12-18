@@ -1,4 +1,4 @@
-export const DEFAULT_CHAT_MODEL: string = "prime-intellect/intellect-3";
+export const DEFAULT_CHAT_MODEL: string = "vita-assistant";
 
 export type ChatModel = {
   id: string;
@@ -8,18 +8,8 @@ export type ChatModel = {
 
 export const chatModels: ChatModel[] = [
   {
-    id: "prime-intellect/intellect-3",
-    name: "Intellect-3",
-    description: "Highly capable reasoning model by Prime Intellect",
-  },
-  {
-    id: "anthropic/claude-opus-4.5",
-    name: "Claude Opus 4.5",
-    description: "Anthropic's most powerful model for complex tasks",
-  },
-  {
-    id: "openai/gpt-5",
-    name: "GPT-5",
-    description: "OpenAI's latest flagship model",
+    id: "vita-assistant",
+    name: "Vita Assistant",
+    description: "VitaDAO's specialized knowledge assistant",
   },
 ];

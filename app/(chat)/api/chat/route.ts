@@ -113,45 +113,36 @@ export async function POST(request: Request) {
       selectedVisibilityType: VisibilityType;
     } = requestBody;
 
-    const session = await auth();
+    // Check if request comes from authorized origin (vitadao.com)
+    const origin = request.headers.get('origin') || request.headers.get('referer');
+    const allowedOrigins = process.env.ALLOWED_IFRAME_ORIGINS?.split(',') || [];
+    const isAuthorizedOrigin = allowedOrigins.some(allowed => {
+      if (!origin) return false;
+      const cleanAllowed = allowed.replace('https://', '').replace('http://', '');
+      const cleanOrigin = origin.replace('https://', '').replace('http://', '');
+      return cleanOrigin.includes(cleanAllowed) || cleanAllowed.includes(cleanOrigin);
+    });
 
-    if (!session?.user) {
+    if (!isAuthorizedOrigin) {
       return new ChatSDKError("unauthorized:chat").toResponse();
     }
 
-    const userType: UserType = session.user.type;
-
-    const messageCount = await getMessageCountByUserId({
-      id: session.user.id,
-      differenceInHours: 24,
-    });
-
-    if (messageCount > entitlementsByUserType[userType].maxMessagesPerDay) {
-      return new ChatSDKError("rate_limit:chat").toResponse();
-    }
-
-    const chat = await getChatById({ id });
-    let messagesFromDb: DBMessage[] = [];
-
-    if (chat) {
-      if (chat.userId !== session.user.id) {
-        return new ChatSDKError("forbidden:chat").toResponse();
+    // Use guest session for iframe requests
+    const session = {
+      user: {
+        id: "guest",
+        type: "guest" as UserType,
+        email: "guest@vitadao.com"
       }
-      // Only fetch messages if chat already exists
-      messagesFromDb = await getMessagesByChatId({ id });
-    } else {
-      const title = await generateTitleFromUserMessage({
-        message,
-      });
+    };
+    const userType: UserType = "guest";
 
-      await saveChat({
-        id,
-        userId: session.user.id,
-        title,
-        visibility: selectedVisibilityType,
-      });
-      // New chat - no need to fetch messages, it's empty
-    }
+    // Skip rate limiting for guest users
+    const messageCount = 0;
+
+    // Skip database operations for guest users - just process the message
+    let messagesFromDb: DBMessage[] = [];
+    // For guest users, we'll just process the current message without database persistence
 
     const uiMessages = [...convertToUIMessages(messagesFromDb), message];
 
@@ -164,21 +155,8 @@ export async function POST(request: Request) {
       country,
     };
 
-    await saveMessages({
-      messages: [
-        {
-          chatId: id,
-          id: message.id,
-          role: "user",
-          parts: message.parts,
-          attachments: [],
-          createdAt: new Date(),
-        },
-      ],
-    });
-
-    const streamId = generateUUID();
-    await createStreamId({ streamId, chatId: id });
+    // Skip saving messages and stream ID for guest users
+    // await saveMessages and createStreamId skipped for guest users
 
     let finalMergedUsage: AppUsage | undefined;
 
@@ -253,27 +231,8 @@ export async function POST(request: Request) {
       },
       generateId: generateUUID,
       onFinish: async ({ messages }) => {
-        await saveMessages({
-          messages: messages.map((currentMessage) => ({
-            id: currentMessage.id,
-            role: currentMessage.role,
-            parts: currentMessage.parts,
-            createdAt: new Date(),
-            attachments: [],
-            chatId: id,
-          })),
-        });
-
-        if (finalMergedUsage) {
-          try {
-            await updateChatLastContextById({
-              chatId: id,
-              context: finalMergedUsage,
-            });
-          } catch (err) {
-            console.warn("Unable to persist last usage for chat", id, err);
-          }
-        }
+        // Skip saving messages for guest users
+        // Database operations skipped for guest session
       },
       onError: () => {
         return "Oops, an error occurred!";

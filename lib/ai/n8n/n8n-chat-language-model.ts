@@ -156,7 +156,6 @@ export class N8nChatLanguageModel implements LanguageModelV2 {
               }
               try {
                 const json = JSON.parse(line);
-                console.log("N8n Chunk:", json); // Debug incoming stream
                 let content = "";
                 let reasoning = "";
 

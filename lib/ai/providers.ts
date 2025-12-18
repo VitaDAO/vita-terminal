@@ -26,10 +26,8 @@ export const myProvider = isTestEnvironment
     })()
   : customProvider({
       languageModels: {
-        "prime-intellect/intellect-3": n8n("prime-intellect/intellect-3"),
-        "anthropic/claude-opus-4.5": n8n("anthropic/claude-opus-4.5"),
-        "openai/gpt-5": n8n("openai/gpt-5"),
-        "title-model": n8n("prime-intellect/intellect-3"),
-        "artifact-model": n8n("prime-intellect/intellect-3"),
+        "vita-assistant": n8n("vita-assistant"),
+        "title-model": n8n("vita-assistant"),
+        "artifact-model": n8n("vita-assistant"),
       },
     });

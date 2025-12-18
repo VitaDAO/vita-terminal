@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
 import { ThemeProvider } from "@/components/theme-provider";
 import { PrivyAuthProvider } from "@/contexts/PrivyAuthContext";
+import { IframeDataProvider } from "@/contexts/IframeDataContext";
 
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
@@ -105,8 +106,10 @@ export default function RootLayout({
           enableSystem
         >
           <PrivyAuthProvider>
-            <Toaster position="top-center" />
-            <SessionProvider>{children}</SessionProvider>
+            <IframeDataProvider>
+              <Toaster position="top-center" />
+              <SessionProvider>{children}</SessionProvider>
+            </IframeDataProvider>
           </PrivyAuthProvider>
         </ThemeProvider>
       </body>

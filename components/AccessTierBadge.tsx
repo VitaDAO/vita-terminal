@@ -3,7 +3,7 @@
 import { GaugeIcon } from "lucide-react"; // Using Lucide icon as a placeholder for the custom gauge if not available
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { useIframeData } from "@/hooks/useIframeData";
+import { useIframeData } from "@/contexts/IframeDataContext";
 
 export function AccessTierBadge({ className }: { className?: string }) {
   const { accessTier, isAuthenticated } = useIframeData();

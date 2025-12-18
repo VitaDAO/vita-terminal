@@ -31,6 +31,34 @@ export function IframeDataProvider({ children }: { children: ReactNode }) {
   const [vitaBalance, setVitaBalance] = useState<VitaBalance | null>(null);
   const [privyAuth, setPrivyAuth] = useState<PrivyAuth | null>(null);
 
+  // Load data from localStorage on mount
+  useEffect(() => {
+    const storedVitaBalance = localStorage.getItem('iframe_vita_balance');
+    const storedPrivyAuth = localStorage.getItem('iframe_privy_auth');
+    
+    if (storedVitaBalance) {
+      try {
+        const parsedBalance = JSON.parse(storedVitaBalance);
+        console.log('Loaded vita balance from localStorage:', parsedBalance);
+        setVitaBalance(parsedBalance);
+      } catch (error) {
+        console.warn('Invalid stored vita balance, removing:', error);
+        localStorage.removeItem('iframe_vita_balance');
+      }
+    }
+    
+    if (storedPrivyAuth) {
+      try {
+        const parsedAuth = JSON.parse(storedPrivyAuth);
+        console.log('Loaded privy auth from localStorage:', parsedAuth);
+        setPrivyAuth(parsedAuth);
+      } catch (error) {
+        console.warn('Invalid stored privy auth, removing:', error);
+        localStorage.removeItem('iframe_privy_auth');
+      }
+    }
+  }, []);
+
   useEffect(() => {
     const handleMessage = (event: MessageEvent) => {
       // Verify origin for security - allow localhost for development
@@ -58,14 +86,17 @@ export function IframeDataProvider({ children }: { children: ReactNode }) {
           if (data.vitaBalance) {
             console.log('Setting vita balance in provider:', data.vitaBalance);
             setVitaBalance(data.vitaBalance);
+            localStorage.setItem('iframe_vita_balance', JSON.stringify(data.vitaBalance));
           }
           
           if (data.privyAuth) {
             console.log('Setting privy auth in provider:', data.privyAuth);
             setPrivyAuth(data.privyAuth);
+            localStorage.setItem('iframe_privy_auth', JSON.stringify(data.privyAuth));
           } else {
             console.log('No privy auth data, clearing in provider');
             setPrivyAuth(null);
+            localStorage.removeItem('iframe_privy_auth');
           }
         }
       } catch (error) {

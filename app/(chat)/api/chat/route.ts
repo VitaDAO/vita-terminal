@@ -133,7 +133,8 @@ export async function POST(request: Request) {
         id: "guest",
         type: "guest" as UserType,
         email: "guest@vitadao.com"
-      }
+      },
+      expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24 hours from now
     };
     const userType: UserType = "guest";
 

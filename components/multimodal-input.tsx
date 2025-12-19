@@ -296,7 +296,7 @@ function PureMultimodalInput({
       /> */}
 
       <PromptInput
-        className="rounded-xl border border-border bg-background p-3 shadow-xs transition-all duration-200 focus-within:border-border hover:border-muted-foreground/50"
+        className="rounded-xl border border-border bg-background px-3 py-2 shadow-xs transition-all duration-200 focus-within:border-border hover:border-muted-foreground/50"
         onSubmit={(event) => {
           event.preventDefault();
           if (status !== "ready") {
@@ -339,10 +339,10 @@ function PureMultimodalInput({
             ))}
           </div>
         )}
-        <div className="flex flex-row items-start gap-1 sm:gap-2">
+        <div className="flex flex-row items-center gap-1 sm:gap-2 h-6">
           <PromptInputTextarea
             autoFocus
-            className="h-10 max-h-10 min-h-10 grow resize-none border-0! border-none! bg-transparent p-2 text-sm outline-none ring-0 [-ms-overflow-style:none] [scrollbar-width:none] placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 [&::-webkit-scrollbar]:hidden"
+            className="h-6 max-h-6 min-h-6 grow resize-none border-0! border-none! bg-transparent px-1 py-0 text-sm outline-none ring-0 [-ms-overflow-style:none] [scrollbar-width:none] placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 [&::-webkit-scrollbar]:hidden leading-6"
             data-testid="multimodal-input"
             disableAutoResize={true}
             onChange={handleInput}
@@ -350,18 +350,7 @@ function PureMultimodalInput({
             ref={textareaRef}
             rows={1}
             value={input}
-          />{" "}
-          {/* <Context {...contextProps} /> */}
-        </div>
-        <PromptInputToolbar className="!border-top-0 border-t-0! p-0 shadow-none dark:border-0 dark:border-transparent!">
-          <PromptInputTools className="gap-0 sm:gap-0.5">
-            {/* <AttachmentsButton
-              fileInputRef={fileInputRef}
-              selectedModelId={selectedModelId}
-              status={status}
-            /> */}
-          </PromptInputTools>
-
+          />
           {status === "submitted" ? (
             <StopButton setMessages={setMessages} stop={stop} />
           ) : (
@@ -374,7 +363,7 @@ function PureMultimodalInput({
               <ArrowUpIcon size={14} />
             </PromptInputSubmit>
           )}
-        </PromptInputToolbar>
+        </div>
       </PromptInput>
       <AccessTierBadge />
     </div>

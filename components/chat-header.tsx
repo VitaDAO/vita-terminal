@@ -28,7 +28,7 @@ function PureChatHeader({
     <header className="sticky top-0 flex items-center gap-2 bg-[#000000] px-2 py-1.5 md:px-2">
       {/* <SidebarToggle /> */}
 
-      {(!open || windowWidth < 768) && (
+      {/* {(!open || windowWidth < 768) && (
         <Button
           className="order-2 mr-4 ml-auto h-8 px-2 md:order-1 md:h-fit md:px-2"
           onClick={() => {
@@ -40,7 +40,7 @@ function PureChatHeader({
           <PlusIcon />
           <span className="md:sr-only">New Chat</span>
         </Button>
-      )}
+      )} */}
 
       {/*{!isReadonly && (
         <VisibilitySelector

@@ -23,9 +23,7 @@ export function AccessTierBadge({ className }: { className?: string }) {
   };
 
   return (
-    <div
-      className={cn("flex w-full items-center justify-between py-2", className)}
-    >
+    <div className={cn("flex w-full items-center justify-between", className)}>
       <div className="flex shrink-0 items-center">
         <p className="font-['Trispace',sans-serif] text-[#777] text-[10px] uppercase tracking-wide">
           VITA-TERMINAL v1.2.5

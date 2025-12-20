@@ -52,29 +52,80 @@ function PureMessages({
         <div className="mx-auto flex min-w-0 max-w-4xl flex-col gap-4 px-2 py-4 md:gap-6 md:px-4">
           {messages.length === 0 && <Greeting />}
 
-          {messages.map((message, index) => (
-            <PreviewMessage
-              chatId={chatId}
-              isLoading={
-                status === "streaming" && messages.length - 1 === index
-              }
-              isReadonly={isReadonly}
-              key={message.id}
-              message={message}
-              regenerate={regenerate}
-              requiresScrollPadding={
-                hasSentMessage && index === messages.length - 1
-              }
-              setMessages={setMessages}
-              vote={
-                votes
-                  ? votes.find((vote) => vote.messageId === message.id)
-                  : undefined
-              }
-            />
-          ))}
+          {messages.map((message, index) => {
+            // Don't render the last assistant message if we're showing thinking state
+            const isLastAssistant = index === messages.length - 1 && message.role === "assistant";
+            const shouldShowThinking = status === "submitted" || (status === "streaming" && !(() => {
+              // Get the last user message to compare against echo
+              const lastUserMessage = [...messages].reverse().find(m => m.role === "user");
+              const userInput = lastUserMessage?.parts?.find(p => p.type === "text")?.text?.trim() || "";
+              
+              return message.parts?.some(part => {
+                if (part.type === "text" && part.text) {
+                  const text = part.text.trim();
+                  // Ignore if it's the user's input being echoed back
+                  if (text === userInput || text.includes(userInput)) {
+                    return false;
+                  }
+                  // Require substantial content that's not just echo
+                  return text.length > 20 && text.includes(' ');
+                }
+                return false;
+              });
+            })());
+            
+            if (isLastAssistant && shouldShowThinking) {
+              return null; // Don't render this message, ThinkingMessage will show instead
+            }
+            
+            return (
+              <PreviewMessage
+                chatId={chatId}
+                isLoading={
+                  status === "streaming" && messages.length - 1 === index
+                }
+                isReadonly={isReadonly}
+                key={message.id}
+                message={message}
+                regenerate={regenerate}
+                requiresScrollPadding={
+                  hasSentMessage && index === messages.length - 1
+                }
+                setMessages={setMessages}
+                vote={
+                  votes
+                    ? votes.find((vote) => vote.messageId === message.id)
+                    : undefined
+                }
+              />
+            );
+          })}
 
-          {status === "submitted" && <ThinkingMessage />}
+          {(() => {
+            // Get the last user message to compare against echo  
+            const lastUserMessage = [...messages].reverse().find(m => m.role === "user");
+            const userInput = lastUserMessage?.parts?.find(p => p.type === "text")?.text?.trim() || "";
+            
+            const hasActualContent = messages.length > 0 && messages[messages.length - 1]?.parts?.some(part => {
+              if (part.type === "text" && part.text) {
+                const text = part.text.trim();
+                // Ignore if it's the user's input being echoed back
+                if (text === userInput || text.includes(userInput)) {
+                  return false;
+                }
+                // Require substantial content that's not just echo
+                return text.length > 20 && text.includes(' ');
+              }
+              return false;
+            });
+            
+            const shouldShowThinking = status === "submitted" || (status === "streaming" && !hasActualContent);
+            
+            if (shouldShowThinking) {
+              return <ThinkingMessage key={`thinking-${status}-${Date.now()}`} />;
+            }
+            return null;
+          })()}
 
           <div
             className="min-h-[24px] min-w-[24px] shrink-0"

@@ -311,9 +311,10 @@ export const PreviewMessage = memo(
 export const ThinkingMessage = () => {
   return (
     <div
-      className="group/message fade-in w-full animate-in duration-300"
+      className="w-full"
       data-role="assistant"
       data-testid="message-assistant-loading"
+      style={{ display: 'block', opacity: 1, visibility: 'visible' }}
     >
       <div className="flex items-start justify-start gap-3">
         <div className="-mt-1 flex size-8 shrink-0 items-center justify-center rounded-full bg-background ring-1 ring-border">
